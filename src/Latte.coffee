@@ -41,13 +41,12 @@ class Latte
 			# eval params
 			eval('var '+name+' = params["'+name+'"];')  for name of params
 			# eval code
-			return eval(string) || _tpl
+			eval(string)
+			# return compiled string
+			return _tpl
 		catch e
 			console.error("Latte render error:", e.stack, " in template:\n\n", string)
 			return ''
-
-
-
 
 
 module.exports = Latte

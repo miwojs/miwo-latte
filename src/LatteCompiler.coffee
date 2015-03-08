@@ -53,6 +53,7 @@ class LatteCompiler
 		# fix string
 		content = content.replace("&gt;", ">")
 		content = content.replace("&lt;", ">")
+		content = content.replace("@", "me.")
 
 		# apply modifiers
 		if content
