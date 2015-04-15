@@ -44,18 +44,18 @@ class CoreMacroSet extends MacroSet
 
 
 	macroFor: (content) ->
-		# for item in array
-		if (matches = content.match(/([\S]+)\s+in\s+([\S]+)/))
-			name = matches[1]
-			property = matches[2]
-			return "_items = " + property + "; for(var _i=0,_l=_items.length; _i<_l; _i++) { var " + name + " = _items[_i];"
-
 		# for item,index in array
-		else if (matches = content.match(/([\S]+),\s*([\S]+)\s+in\s+([\S]+)/))
+		if (matches = content.match(/([\S]+),\s*([\S]+)\s+in\s+([\S]+)/))
 			name = matches[1]
 			index = matches[2]
 			property = matches[3]
 			return "_items = " + property + "; for(var "+index+"=0,"+index+"_l=_items.length; "+index+"<"+index+"_l; "+index+"++) { var " + name + " = _items["+index+"];"
+
+		# for item in array
+		else if (matches = content.match(/([\S]+)\s+in\s+([\S]+)/))
+			name = matches[1]
+			property = matches[2]
+			return "_items = " + property + "; for(var _i=0,_l=_items.length; _i<_l; _i++) { var " + name + " = _items[_i];"
 
 		# for name,value of object
 		else if (matches = content.match(/([\S]+),\s*([\S]+)\s+of\s+([\S]+)/))
@@ -63,6 +63,12 @@ class CoreMacroSet extends MacroSet
 			value = matches[2]
 			property = matches[3]
 			return "_items = " + property + "; for(var " + name + " in _items) { var " + value + " = _items[" + name + "];"
+
+		# for name of object
+		else if (matches = content.match(/([\S]+)\s+of\s+([\S]+)/))
+			name = matches[1]
+			property = matches[2]
+			return "_items = " + property + "; for(var " + name + " in _items) {"
 
 		# someting else...
 		else
